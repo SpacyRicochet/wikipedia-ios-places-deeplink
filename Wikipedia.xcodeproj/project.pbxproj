@@ -8113,7 +8113,9 @@
 				83ACAA9F24E6DC8E003B3035 /* Command Line Tools */,
 				D4991436181D51DE00E6073C /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 			usesTabs = 0;
 		};
 		D4991436181D51DE00E6073C /* Products */ = {
