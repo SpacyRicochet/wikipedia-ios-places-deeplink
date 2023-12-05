@@ -32,20 +32,37 @@ These prompts might be a potential issue, since they could obstruct moving and g
 
 Time spent: 30 minutes
 
-### Adding coordinate support to deep links
+## Adding coordinate support to deep links
 
 Going through the app's code, it looks like there is already a specific user activity type for Places, which seems focused on a direct article link and is untested. 
 Piggy-backing on this, we can add support and tests for a hypothetical Places deeplink that doesn't use an article link, but coordinates instead.
 
+* We follow the convention for user info keys; `WMFLocation[Lat|Lon]`
 * The `wikipedia://places` deeplink already goes to the Places tab
 * Adding an article URL doesn't appear to do anything extra… maybe it's unimplemented, since it's also untested?
   - E.g. `wikipedia://places?WMFArticleURL=https://en.wikipedia.org/wiki/Leiderdorp`
 
-Time spent: 1h30m
-Commit: bb070f98dd8479690dd7ec05775d9fb11fcb4433
+- Time spent: 1h30m
+- Commit: bb070f98dd8479690dd7ec05775d9fb11fcb4433
 
 ### Fight with pre-commit hook
 
 There was a small struggle with the pre-commit hook, which assumes that homebrew installs stuff in the `/usr/local/bin`. Solved this by symlinking `clang-format` to the actual installation path.
 
 Time spent: 15m
+
+## Go to location coordinates
+
+Doing a search on 'places' popped up the PlacesViewController and areas where it was called. Most notably, it showed how the view controller is called from the AppViewController when the Places activity is performed. 
+
+In addition to the original activity with article URLs, we also check if there's a location in the activity. If so, we can call the PlacesViewController to show the map and immediately move to the specified location.
+Some testing also shows that the app correctly handles any issues that might pop up during onboarding or when requesting location permission, so that's nice.
+
+Apparently there are no tests for the WMFAppViewController, so we omit those from the assignment.
+
+This feels like the work on the Wikipedia iOS app is finished. On towards making a Locations app!
+
+* Side quest: to check is the article URL is added correctly to activity, we add a test.
+
+- Time spent: 1h
+- Commit: 6f4ed6da39f873f88e2793844acb56381e128f78
