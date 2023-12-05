@@ -3,6 +3,7 @@
 
 @import CoreSpotlight;
 @import MobileCoreServices;
+#import <CoreLocation/CLLocation.h>
 
 NSString *const WMFNavigateToActivityNotification = @"WMFNavigateToActivityNotification";
 
@@ -285,6 +286,17 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
 
 - (NSURL *)wmf_contentURL {
     return self.userInfo[@"WMFURL"];
+}
+
+- (nullable CLLocation *)wmf_location {
+    NSNumber *latitude = self.userInfo[@"WMFLocationLat"];
+    NSNumber *longitude = self.userInfo[@"WMFLocationLon"];
+    
+    if (latitude != nil && longitude != nil) {
+        return [[CLLocation alloc] initWithLatitude:latitude.doubleValue longitude:longitude.doubleValue];
+    } else {
+        return nil;
+    }
 }
 
 + (NSURLComponents *)wmf_baseURLComponentsForActivityOfType:(WMFUserActivityType)type {

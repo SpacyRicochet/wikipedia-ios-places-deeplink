@@ -1,5 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "NSUserActivity+WMFExtensions.h"
+#import <CoreLocation/CLLocation.h>
 
 
 @interface NSUserActivity_WMFExtensions_wmf_activityForWikipediaScheme_Test : XCTestCase
@@ -58,6 +59,15 @@
     XCTAssertEqual(activity.wmf_type, WMFUserActivityTypePlaces);
 }
 
+- (void)testPlacesURLWithArticleURL {
+    NSURL *url = [NSURL URLWithString:@"wikipedia://places?WMFArticleURL=https://en.wikipedia.org/wiki/Leiderdorp"];
+    NSUserActivity *activity = [NSUserActivity wmf_activityForWikipediaScheme:url];
+    XCTAssertEqual(activity.wmf_type, WMFUserActivityTypePlaces);
+    XCTAssertEqualObjects(activity.webpageURL.wmf_title, @"Leiderdorp");
+    XCTAssertEqualObjects(activity.webpageURL.absoluteString,
+                          @"https://en.wikipedia.org/wiki/Leiderdorp");
+}
+
 - (void)testPlacesCoordinatesURL {
     
     NSURL *url = [NSURL URLWithString:@"wikipedia://places?WMFLocationLat=52.33697638860638&WMFLocationLon=4.874657674257071"];
@@ -66,6 +76,8 @@
     XCTAssertNil(activity.webpageURL);
     XCTAssertEqualObjects(activity.userInfo[@"WMFLocationLat"], [NSNumber numberWithDouble:52.33697638860638]);
     XCTAssertEqualObjects(activity.userInfo[@"WMFLocationLon"], [NSNumber numberWithDouble:4.874657674257071]);
+    XCTAssertEqual(activity.wmf_location.coordinate.latitude, 52.33697638860638);
+    XCTAssertEqual(activity.wmf_location.coordinate.longitude, 4.874657674257071);
 }
 
 @end
