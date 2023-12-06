@@ -100,3 +100,20 @@ In the idle state, we present one big button that will start the fetching. We di
 
 Time spent: 2h30m
 Commit: db059a27c88ab96c0d658e1c7e83d61d5ff60ba2
+
+## Fetch the locations
+
+We need to create a client that can fetch the locations so they can be presented to our user. Since this will be an dependency that we would like to stub for testing, we'll create a separate client that we inject into our app. To do this, we'll use the `swift-dependencies` framework, which gives us a useful way of managing simple dependencies.
+
+We also make use of concurrency, since that simplifies our code immensely by avoiding the need for completion handlers. So nice!
+
+* We create some order in our project chaos and move our object out of ContentView to proper folders that follow the MVVM pattern.
+* The locations are fetched in our LocationsClient, which has injection values for…
+  * … **Testing**; All tests fail if you forget to override the dependency.
+	* … **Previews**; Since we want our previews to perform predictably, which means that the preview that starts from 'Idle' actually functions.
+	* … **Live**; In production, we perform an actual call to fetch the locations. Since this all happens through Apple's API's, we don't treat URLSession and JSONDecoder as their own dependencies, but just call them directly.
+	
+In principle, this finishes up our technical assignment! However, there are still some things that we can adjust to make the code better; accessibility and tests.
+
+Time spent: 1h
+Commit: 08debd00b3a6750795bb5795ffe43f627858db52
