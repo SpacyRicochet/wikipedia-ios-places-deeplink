@@ -128,3 +128,15 @@ Next up, we want to test our ViewModel. Now, we have made our job easier with th
 
 Time spent: 45m
 Commit: 9427c2235dd711219b68e69888ffcf6e3d98bfdb
+
+## Error state
+
+While fetching the locations, something could have gone wrong. We should tell the user what went wrong, to avoid confusion and potentially give options to remedy the situation. To achieve this, we'll expand the view model with an extra alert state. We'll keep things simple and show a simple alert with the localized error message.
+
+* Showing errors in vanilla SwiftUI is pretty annoying. The solution to create an impromptu binding beats keeping another `isAlertPresented` value in the view model, in my opinion.
+* Showing errors in other options—e.g. using AlertState from `swiftui-navigation`—isn't much better, so we'll keep the above approach.
+* Another option would be to create another LocationState case `.failure(errorMessage: String)`, which is also valid. But because we're using a system alert dialog, I prefer the separate view model property.
+* We also learned that the closure of `.refreshable` isn't automatically wrapped in a Task, leading to an immediate cancellation. Fixed that.
+
+Time spent: 45m
+Commit: 2252ed1399f3d2585e8c8554d2d2f2806b92e525
