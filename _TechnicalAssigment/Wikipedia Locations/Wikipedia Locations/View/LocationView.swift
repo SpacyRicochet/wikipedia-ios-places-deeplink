@@ -13,6 +13,8 @@ struct LocationView: View {
 				}
 				Text("(\(location.coordinates.latitude), \(location.coordinates.longitude))")
 					.font(.callout)
+					.accessibilityLabel("Coordinates latitude \(location.coordinates.latitude) and longitude \(location.coordinates.longitude).")
+					.accessibilityHint("Double-tap to open Wikipedia for articles in the area")
 			}
 			Spacer()
 			Image(systemName: "arrow.up.forward.app")
