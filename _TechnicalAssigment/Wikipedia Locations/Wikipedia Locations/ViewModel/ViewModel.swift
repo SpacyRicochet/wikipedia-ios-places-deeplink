@@ -21,6 +21,15 @@ class ViewModel {
 	@MainActor
 	func fetchLocationsTapped() async {
 		locationState = .fetching
+		await performFetch()
+	}
+	
+	func refreshInitialized() async {
+		await performFetch()
+	}
+	
+	private func performFetch() async {
+		// Since this only deals with the actual fetch and its aftermath, make sure you have set the correct `locationState` before calling this function.
 		do {
 			// Since this is the only place we use the client, we don't declare it as a property.
 			let locations = try await Dependency(\.locationsClient).wrappedValue.fetch()

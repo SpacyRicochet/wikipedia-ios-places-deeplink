@@ -41,7 +41,7 @@ struct ContentView: View {
 						.listStyle(.plain)
 						.refreshable {
 							Task {
-								await self.viewModel.fetchLocationsTapped()
+								await self.viewModel.refreshInitialized()
 							}
 						}
 				}
