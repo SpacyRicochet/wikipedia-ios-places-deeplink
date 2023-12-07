@@ -178,3 +178,15 @@ The location cells could use some work. While visually the cells make sense, Voi
 
 Time spent: 45m
 Commit: 7ec2dd93f70df61c7c9c7b88a7f26b588f538e62
+
+## Entering a custom location
+
+Whoops, almost missed the requirement that the user should be able to enter their own custom location as well. Let's work on that. Since there's no requirement for how the user should be able to input this custom location, we use a MapView for this.
+
+* The MapView uses a deprecated initializer, since we know for certain how to use that with a binding for the coordinate region.
+* MapView and VoiceOver are an interesting combination. Traversing a map is pretty complicated, and we haven't explored how to make custom controls on top of the map discoverable to VoiceOver.
+* We also add a 'Reset' button to easily get back to the app's initial state.
+* Since the accessibility escape gesture on alerts only works on the cancel action, we set the role the error dialog's dismiss button to `.cancel`.
+
+Time spent: 2h 30m
+Commit: 2f5b0d18ff4e038ab0244507e0e8b72159b37d96
