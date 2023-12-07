@@ -11,9 +11,11 @@ enum LocationsState: Equatable {
 @Observable
 class ViewModel {
 	var locationState: LocationsState
-	
-	init(locationState: LocationsState = LocationsState.idle) {
+	var alertMessage: String?
+		
+	init(locationState: LocationsState = LocationsState.idle, alertMessage: String? = nil) {
 		self.locationState = locationState
+		self.alertMessage = alertMessage
 	}
 	
 	@MainActor
@@ -25,11 +27,17 @@ class ViewModel {
 			self.locationState = .success(locations: locations)
 		} catch {
 			self.locationState = .idle
+			self.alertMessage = error.localizedDescription
 		}
 	}
 	
 	func locationTapped(_ location: Location) {
 		UIApplication.shared.open(location.wikipediaLink)
 	}
+	
+	func alertDismissTapped() {
+		alertMessage = nil
+	}
+	
 }
 

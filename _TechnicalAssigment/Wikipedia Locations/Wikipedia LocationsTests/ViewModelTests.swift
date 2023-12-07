@@ -4,7 +4,7 @@ import Dependencies
 import ConcurrencyExtras
 
 final class ViewModelTests: XCTestCase {
-	func test_fetchLocationsTapped_performsAsExpected() async throws {
+	func test_fetchLocationsTapped_withSuccess_performsAsExpected() async throws {
 		// ConcurrencyExtras provides this serial executor which forces Tasks to be executed serially and predictably.
 		await withMainSerialExecutor {
 			// We use Dependencies to stub out the locations client with a predictable version.
@@ -38,5 +38,39 @@ final class ViewModelTests: XCTestCase {
 				)
 			}
 		}
+	}
+	
+	func test_fetchLocationsTapped_withError_performsAsExpected() async throws {
+		enum SomeError: Error {
+			case any
+		}
+		// ConcurrencyExtras provides this serial executor which forces Tasks to be executed serially and predictably.
+		await withMainSerialExecutor {
+			// We use Dependencies to stub out the locations client with a predictable version.
+			await withDependencies {
+				$0.locationsClient = .init(fetch: {
+					await Task.yield()
+					throw SomeError.any
+				})
+			} operation: {
+				let sut = ViewModel(locationState: .idle)
+				let task = Task { await sut.fetchLocationsTapped() }
+				await Task.yield()
+				XCTAssertEqual(sut.locationState, .fetching)
+				
+				await task.value
+				guard case .idle = sut.locationState else {
+					XCTFail("Invalid view model state. Expected: .idle; Actual: \(sut.locationState)")
+					return
+				}
+				XCTAssertNotNil(sut.alertMessage)
+			}
+		}
+	}
+	
+	func test_alertDismissTapped_setsAlertMessageToNil() throws {
+		let sut = ViewModel(locationState: .idle, alertMessage: "Hey! Listen")
+		sut.alertDismissTapped()
+		XCTAssertNil(sut.alertMessage)
 	}
 }

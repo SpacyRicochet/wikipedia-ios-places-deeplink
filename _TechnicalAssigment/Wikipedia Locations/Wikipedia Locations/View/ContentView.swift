@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUINavigation
 
 struct ContentView: View {
 	@State var viewModel: ViewModel = .init()
@@ -39,11 +40,29 @@ struct ContentView: View {
 						})
 						.listStyle(.plain)
 						.refreshable {
-							await self.viewModel.fetchLocationsTapped()
+							Task {
+								await self.viewModel.fetchLocationsTapped()
+							}
 						}
 				}
 			}
 			.navigationTitle("Wikipedia Locations")
+			.alert(
+				"Failed to load locations",
+				isPresented: .init(
+					get: { self.viewModel.alertMessage != nil },
+					set: { value in
+						// We only react to the alert setting this to false.
+						guard !value else { return }
+						self.viewModel.alertDismissTapped()
+					}),
+				actions: {
+					Button { } label: {
+						Text("Okay")
+					}
+				},
+				message: { Text(self.viewModel.alertMessage ?? "Please try again later") }
+			)
 		}
 	}
 }
