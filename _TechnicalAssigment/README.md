@@ -152,3 +152,29 @@ Since iOS shows us a nice progress indicator, we don't need to show the manual `
 
 Time spent: 30min
 Commit: b0f8dd38cb0312b3db3f12bfe2d1582bd0d44bd9
+
+## Accessibility 🔥♿️🦾 — VoiceOver
+
+Now that everything is finished and tested, let's perform an accessibility audit. For this assignment, we'll focus mostly on VoiceOver.
+
+### Idle
+
+Opening the app brings up the initial idle state. Considering that the only visible control a single button with a describing call to action, we're fine here.
+
+### Fetching
+
+The `.fetching` state however doesn't really work. There is no announcement to the user that the app is currently fetching the data. Instead, it just announces the activated button again for some reason. After fetching the data, it does focus on the first item in the list of locations. That is excellent.
+
+Ideally we announce the loading as well. However, posting a `.announcement` notification doesn't appear to announce anything. Using `.layoutChanged` or `.screenChanged`, which would both be valid does work. But if you use those, instead of focusing on the first location in the list after fetching succeeds, VoiceOver will focus on the navigation bar title. So we lose the nice focus on the location cell.
+
+In the end, we don't announce anything, as it's quick enough that the user doesn't really notice and the focus works better in the default situation.
+
+### Success
+
+The location cells could use some work. While visually the cells make sense, VoiceOver reads the GPS coordinates out verbatim without mentioning that it's the place's coordinates. It does announce that the cell is a button, but not what it does. The location without a name could also be announced somewhat nicer.
+
+* Weirdly enough, VoiceOver doesn't announce the accessibility hint when it first focuses on the list's cell. Only after you focus on it manually.
+* Apparently you can refresh the content by focusing on the list and performing a three finger swipe down. Nice!
+
+Time spent: 45m
+Commit: 7ec2dd93f70df61c7c9c7b88a7f26b588f538e62
