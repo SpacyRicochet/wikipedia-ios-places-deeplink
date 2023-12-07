@@ -140,3 +140,15 @@ While fetching the locations, something could have gone wrong. We should tell th
 
 Time spent: 45m
 Commit: 2252ed1399f3d2585e8c8554d2d2f2806b92e525
+
+## Bug fix
+
+There's a weird glitch in the refresh control of the list, where it won't slide up gracefully and wait. This is because we set the location state to `.fetching`, which immediately refreshes the entire screen and plays badly with the refresh control.
+
+Since iOS shows us a nice progress indicator, we don't need to show the manual `.fetching` progress view. Instead, we refactor the code to avoid the regular fetching state.
+
+* Fixes the UI glitch when refreshing.
+* Needs additional tests for the View Model.
+
+Time spent: 30min
+Commit: b0f8dd38cb0312b3db3f12bfe2d1582bd0d44bd9
