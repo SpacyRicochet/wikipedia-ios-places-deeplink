@@ -190,3 +190,22 @@ Whoops, almost missed the requirement that the user should be able to enter thei
 
 Time spent: 2h 30m
 Commit: 2f5b0d18ff4e038ab0244507e0e8b72159b37d96
+
+# Epilogue
+
+The assigment is now complete. 
+
+## Achieved
+
+* We have altered the Wikipedia app with minor changes, mostly making use of existing infrastructure. 
+* We have created a Wikipedia Locations app that allows the user to load a set of locations to open Wikipedia on, or to select their own location from a map.
+* The Wikipedia Locations app has been audited for basic VoiceOver needs, mostly concerned with making better labels, adding hints where necessary and making sure the user is able to escape where necessary.
+* We have added unit tests for the view model.
+
+## Neglected
+
+Some things were neglected, since they would not have added substantially to the assignment, without taking up plenty of additional time. In a regular development environment, these should also be included in the work.
+
+* **Documentation** wasn't added to the models and functions.
+* **UI tests** weren't added, since these are notoriously finicky and can be a huge time sink.
+* **Running on device** isn't working for the Wikipedia alterations, since this requires more substantial changes to that project.
