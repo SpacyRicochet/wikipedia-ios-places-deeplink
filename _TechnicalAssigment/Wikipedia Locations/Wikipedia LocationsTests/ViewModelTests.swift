@@ -154,6 +154,18 @@ final class ViewModelTests: XCTestCase {
 		sut.alertDismissTapped()
 		XCTAssertNil(sut.alertMessage)
 	}
+	
+	func test_resetApp_resetsViewModelToInitialState() {
+		let sut = ViewModel()
+		sut.locationState = .fetching
+		sut.alertMessage = "Error"
+		sut.isShowingMap = true
+		
+		sut.reset()
+		XCTAssertEqual(sut.locationState, .idle)
+		XCTAssertNil(sut.alertMessage)
+		XCTAssertFalse(sut.isShowingMap)
+	}
 }
 
 private enum SomeError: Error {

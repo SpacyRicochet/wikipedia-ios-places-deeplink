@@ -47,6 +47,25 @@ struct ContentView: View {
 				}
 			}
 			.navigationTitle("Wikipedia Locations")
+			.toolbar(content: {
+				ToolbarItemGroup {
+					Button {
+						self.viewModel.reset()
+					} label: {
+						Image(systemName: "arrow.circlepath")
+					}
+					.accessibilityLabel("Reset")
+					.accessibilityHint("Double-tap to clear the app's data")
+
+					Button {
+						self.viewModel.showMap()
+					} label: {
+						Image(systemName: "map")
+					}
+					.accessibilityLabel("Open location picker")
+					.accessibilityHint("Double-tap to open a map to select your own location")
+				}
+			})
 			.alert(
 				"Failed to load locations",
 				isPresented: .init(
@@ -57,12 +76,17 @@ struct ContentView: View {
 						self.viewModel.alertDismissTapped()
 					}),
 				actions: {
-					Button { } label: {
+					Button(role: .cancel) { } label: {
 						Text("Okay")
 					}
 				},
 				message: { Text(self.viewModel.alertMessage ?? "Please try again later") }
 			)
+			.fullScreenCover(isPresented: $viewModel.isShowingMap, content: {
+				NavigationView {
+					MapView(buttonHandler: viewModel.locationTapped)
+				}
+			})
 		}
 	}
 }

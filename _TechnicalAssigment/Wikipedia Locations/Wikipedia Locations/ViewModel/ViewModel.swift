@@ -12,10 +12,12 @@ enum LocationsState: Equatable {
 class ViewModel {
 	var locationState: LocationsState
 	var alertMessage: String?
+	var isShowingMap: Bool
 		
-	init(locationState: LocationsState = LocationsState.idle, alertMessage: String? = nil) {
+	init(locationState: LocationsState = LocationsState.idle, alertMessage: String? = nil, isShowingMap: Bool = false) {
 		self.locationState = locationState
 		self.alertMessage = alertMessage
+		self.isShowingMap = isShowingMap
 	}
 	
 	@MainActor
@@ -48,5 +50,14 @@ class ViewModel {
 		alertMessage = nil
 	}
 	
+	func showMap() {
+		isShowingMap = true
+	}
+	
+	func reset() {
+		locationState = .idle
+		isShowingMap = false
+		alertMessage = nil
+	}
 }
 
