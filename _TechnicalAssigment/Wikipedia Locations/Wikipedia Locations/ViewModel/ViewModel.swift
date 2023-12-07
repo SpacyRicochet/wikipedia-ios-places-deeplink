@@ -2,7 +2,7 @@ import Foundation
 import Dependencies
 import class SwiftUI.UIApplication
 
-enum LocationsState {
+enum LocationsState: Equatable {
 	case idle
 	case fetching
 	case success(locations: [Location])
