@@ -1,3 +1,6 @@
+# Technical assignment
+⚠️ For information on the technical assignment, please [read this documentation](_TechnicalAssignment/README.md) instead.
+
 # Wikipedia iOS
 The official Wikipedia iOS app.
 
