@@ -23,6 +23,7 @@ Let's go through the README.md and check the project files for any good clues.
 	- Committing requires Ruby 3.0.5
 * Looking through the app with a lot of 'Search project' for terms like 'universal link', 'deep link' and 'places'
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 30m |
 
@@ -36,14 +37,16 @@ Piggy-backing on this, we can add support and tests for a hypothetical Places de
 * Adding an article URL doesn't appear to do anything extra… maybe it's unimplemented, since it's also untested?
 	- E.g. `wikipedia://places?WMFArticleURL=https://en.wikipedia.org/wiki/Leiderdorp`
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 1h 30m |
-| Commit | bb070f98dd8479690dd7ec05775d9fb11fcb4433 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/bb070f98dd8479690dd7ec05775d9fb11fcb4433 |
 
 ### Fight with pre-commit hook
 
 There was a small struggle with the pre-commit hook, which assumes that homebrew installs stuff in the `/usr/local/bin`. Solved this by symlinking `clang-format` to the actual installation path.
 
+| Info | Detail |
 | --- | --- |
 | Time spent|15m|
 
@@ -60,9 +63,10 @@ This feels like the work on the Wikipedia iOS app is finished. On towards making
 
 * Side quest: to check is the article URL is added correctly to activity, we add a test.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 1h |
-| Commit | 6f4ed6da39f873f88e2793844acb56381e128f78 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/6f4ed6da39f873f88e2793844acb56381e128f78 |
 
 ## Time for locations!
 
@@ -95,9 +99,10 @@ In the idle state, we present one big button that will start the fetching. We di
 * For now, tapping the fetch button immediately shows some test data, as opposed to fetching the JSON file. Tapping any of the locations will open the Wikipedia app at that location!
 * Wrangling with vanilla SwiftUI `List` was a bit of a struggle, since that has been awhile. But we're back up to speed again.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 2h 30m |
-| Commit | db059a27c88ab96c0d658e1c7e83d61d5ff60ba2 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/db059a27c88ab96c0d658e1c7e83d61d5ff60ba2 |
 
 ## Fetch the locations
 
@@ -113,9 +118,10 @@ We also make use of concurrency, since that simplifies our code immensely by avo
 	
 In principle, this finishes up our technical assignment! However, there are still some things that we can adjust to make the code better; accessibility and tests.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 1h |
-| Commit | 08debd00b3a6750795bb5795ffe43f627858db52 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/08debd00b3a6750795bb5795ffe43f627858db52 |
 
 ## Testing the ViewModel
 
@@ -125,9 +131,10 @@ Next up, we want to test our ViewModel. Now, we have made our job easier with th
 * Still a bunch of weird code to get it tested, but it does work quite well.
 * With inspiration from this episode of PointFree on [Reliable Async Testing](https://www.pointfree.co/episodes/ep241-reliable-async-tests)
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 45m |
-| Commit | 9427c2235dd711219b68e69888ffcf6e3d98bfdb |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/9427c2235dd711219b68e69888ffcf6e3d98bfdb |
 
 ## Error state
 
@@ -138,9 +145,10 @@ While fetching the locations, something could have gone wrong. We should tell th
 * Another option would be to create another LocationState case `.failure(errorMessage: String)`, which is also valid. But because we're using a system alert dialog, I prefer the separate view model property.
 * We also learned that the closure of `.refreshable` isn't automatically wrapped in a Task, leading to an immediate cancellation. Fixed that.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 45m |
-| Commit | 2252ed1399f3d2585e8c8554d2d2f2806b92e525 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/2252ed1399f3d2585e8c8554d2d2f2806b92e525 |
 
 ## Bug fix
 
@@ -151,9 +159,10 @@ Since iOS shows us a nice progress indicator, we don't need to show the manual `
 * Fixes the UI glitch when refreshing.
 * Needs additional tests for the View Model.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 30min |
-| Commit | b0f8dd38cb0312b3db3f12bfe2d1582bd0d44bd9 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/b0f8dd38cb0312b3db3f12bfe2d1582bd0d44bd9 |
 
 ## Accessibility 🔥♿️🦾 — VoiceOver
 
@@ -178,9 +187,10 @@ The location cells could use some work. While visually the cells make sense, Voi
 * Weirdly enough, VoiceOver doesn't announce the accessibility hint when it first focuses on the list's cell. Only after you focus on it manually.
 * Apparently you can refresh the content by focusing on the list and performing a three finger swipe down. Nice!
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 45m |
-| Commit | 7ec2dd93f70df61c7c9c7b88a7f26b588f538e62 |
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/7ec2dd93f70df61c7c9c7b88a7f26b588f538e62 |
 
 ## Entering a custom location
 
@@ -191,9 +201,10 @@ Whoops, almost missed the requirement that the user should be able to enter thei
 * We also add a 'Reset' button to easily get back to the app's initial state.
 * Since the accessibility escape gesture on alerts only works on the cancel action, we set the role the error dialog's dismiss button to `.cancel`.
 
+| Info | Detail |
 | --- | --- |
 | Time spent | 2h 30m|
-| Commit | 2f5b0d18ff4e038ab0244507e0e8b72159b37d96|
+| Commit | https://github.com/SpacyRicochet/wikipedia-ios-places-deeplink/commit/2f5b0d18ff4e038ab0244507e0e8b72159b37d96 |
 
 ## Epilogue
 
