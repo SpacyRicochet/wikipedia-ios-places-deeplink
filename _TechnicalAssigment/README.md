@@ -117,3 +117,14 @@ In principle, this finishes up our technical assignment! However, there are stil
 
 Time spent: 1h
 Commit: 08debd00b3a6750795bb5795ffe43f627858db52
+
+## Testing the ViewModel
+
+Next up, we want to test our ViewModel. Now, we have made our job easier with the use of stubbable dependencies. However, we made our job a lot harder by using concurrency, which is about as testable as a house cat. Luckily, PointFree did some work on this and provided a specific framework `swift-concurrency-extras` that helps with this.
+
+* We make `Location` equatable for just the tests. That's strictly not necessary, but the impact is minimal.
+* Still a bunch of weird code to get it tested, but it does work quite well.
+* With inspiration from this episode of PointFree on [Reliable Async Testing](https://www.pointfree.co/episodes/ep241-reliable-async-tests)
+
+Time spent: 45m
+Commit: 9427c2235dd711219b68e69888ffcf6e3d98bfdb
